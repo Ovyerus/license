@@ -4,6 +4,9 @@
   "main": "dist/getLicense.js",
   "author": "Ovyerus <iamovyerus@gmail.com>",
   "license": "MIT",
+  "bin": {
+    "license": "dist/cli/index.js"
+  },
   "scripts": {
     "dev": "ts-node index.ts",
     "lint": "eslint --fix --ext js,ts .",
@@ -12,10 +15,10 @@
   "dependencies": {
     "@ovyerus/licenses": "^6.2.2",
     "configstore": "^5.0.0",
-    "enquirer": "^2.3.4",
     "fuzzy-search": "^3.1.0",
     "git-config-path": "^2.0.0",
     "parse-git-config": "^3.0.0",
+    "prompts": "^2.3.1",
     "rambda": "^4.4.0",
     "xns": "^2.0.7",
     "yargs": "^15.1.0"
@@ -26,6 +29,7 @@
     "@types/git-config-path": "^2.0.0",
     "@types/node": "^13.1.8",
     "@types/parse-git-config": "^3.0.0",
+    "@types/prompts": "^2.0.3",
     "@types/yargs": "^15.0.0",
     "@typescript-eslint/eslint-plugin": "2.3.1",
     "@typescript-eslint/parser": "2.3.1",
