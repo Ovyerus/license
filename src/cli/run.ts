@@ -1,6 +1,7 @@
 import licenses, { Identifiers } from '@ovyerus/licenses';
 import identifiers from '@ovyerus/licenses/simple';
 import prompts from 'prompts';
+import wrap from 'wrap-text';
 
 import { promises as fs } from 'fs';
 
@@ -21,7 +22,7 @@ interface RunArgv {
 
 export default async function run({
   license: license_,
-  name,
+  name: author,
   email,
   year,
   // TODO: other fields for other placeholders in @ovyerus/licenses
@@ -74,10 +75,12 @@ export default async function run({
     });
 
     ({ license } = response);
-    return;
+
+    if (!license) return;
   }
 
-  const text = getLicense(license, { name, year, email });
+  console.log(author);
+  const text = wrap(getLicense(license, { author, year, email }));
 
   await fs.writeFile(`./${filename}`, text);
 
