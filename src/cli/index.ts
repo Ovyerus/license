@@ -11,13 +11,15 @@ import path from 'path';
 import config from './config';
 import run from './run';
 
-// eslint-disable-next-line no-sync
 const pkg = JSON.parse(
+  // eslint-disable-next-line no-sync
   fs.readFileSync(path.resolve(__dirname, '../../package.json'), 'utf-8')
 );
 const gitConfig = () => parseGitConfig({ cwd: '/', path: gitPath('global') });
 
-const getUserName = (): string => cfg.get('name') || gitConfig().user.name;
+// TODO: maybe have a fallback before git, be npm???
+const getUserName = (): string =>
+  cfg.get('name') || gitConfig().user.name || process.env.USER;
 const getUserEmail = (): string => cfg.get('email') || gitConfig().user.email;
 
 const validateYear = (year: string) => {
