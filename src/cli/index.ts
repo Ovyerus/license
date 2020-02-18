@@ -39,15 +39,13 @@ const validateYear = (year: string) => {
 
 export const cfg = new ConfigStore(pkg.name);
 
-// if (something) {
 main();
-// }
 
 export default function main() {
   return yargs
     .scriptName(pkg.name)
     .version(pkg.version)
-    .usage("todo")
+    .usage("Usage: license [--help] [--version] [command]")
     .command(
       "$0 [license]",
       "Generate a license file.",
