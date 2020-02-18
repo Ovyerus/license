@@ -1,9 +1,10 @@
 import licenses, { Identifiers } from "@ovyerus/licenses";
 import identifiers from "@ovyerus/licenses/simple";
+import detectIntent from "detect-indent";
 import prompts from "prompts";
 import wrap from "wrap-text";
 
-import { promises as fs } from "fs";
+import { promises as fs, existsSync } from "fs";
 
 import getLicense from "../getLicense";
 
@@ -84,6 +85,15 @@ export default async function run({
   const text = wrap(getLicense(license, { author, year, email }));
 
   await fs.writeFile(`./${filename}`, text);
+
+  if (existsSync("./package.json")) {
+    const rawPackage = await fs.readFile("./package.json", "utf-8");
+    const { indent } = detectIntent(rawPackage);
+    const pkg = JSON.parse(rawPackage);
+    pkg.license = license;
+
+    await fs.writeFile("./package.json", JSON.stringify(pkg, null, indent));
+  }
 
   console.log(`Successfully wrote the ${license} license to ./LICENSE`);
   console.log(

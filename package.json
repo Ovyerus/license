@@ -15,6 +15,7 @@
   "dependencies": {
     "@ovyerus/licenses": "^6.2.2",
     "configstore": "^5.0.1",
+    "detect-indent": "^6.0.0",
     "fuzzy-search": "^3.1.0",
     "git-config-path": "^2.0.0",
     "parse-git-config": "^3.0.0",
