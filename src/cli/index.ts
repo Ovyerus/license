@@ -2,7 +2,6 @@
 import ConfigStore from "configstore";
 import gitPath from "git-config-path";
 import { sync as parseGitConfig } from "parse-git-config";
-import { all } from "rambda";
 import yargs from "yargs";
 
 import fs from "fs";
@@ -10,6 +9,7 @@ import path from "path";
 
 import config from "./config";
 import run from "./run";
+import { isAcceptedYear } from "./utils";
 
 const pkg = JSON.parse(
   // eslint-disable-next-line no-sync
@@ -23,14 +23,7 @@ const getUserName = (): string =>
 const getUserEmail = (): string => cfg.get("email") || gitConfig().user.email;
 
 const validateYear = (year: string) => {
-  const split = year.split("-");
-
-  if (
-    /^\d{4}$/.test(year) ||
-    (split.length === 2 && all(x => /^\d{4}$/.test(x), split)) ||
-    /^(?:\d{4}(?:, ?)?)+$/.test(year)
-  )
-    return year;
+  if (isAcceptedYear(year)) return year;
   else
     throw new Error(
       "Year should either be a standalone year `2020`, a year range `2019-2020`, or a list of years `1999, 2003, 2005`"

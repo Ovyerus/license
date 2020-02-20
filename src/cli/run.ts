@@ -86,6 +86,7 @@ export default async function run({
 
   await fs.writeFile(`./${filename}`, text);
 
+  // TODO: what other manifests contain license info???
   if (existsSync("./package.json")) {
     const rawPackage = await fs.readFile("./package.json", "utf-8");
     const { indent } = detectIntent(rawPackage);
