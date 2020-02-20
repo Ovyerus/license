@@ -1338,11 +1338,6 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-rambda@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/rambda/-/rambda-4.5.0.tgz#2f01a4387f73f87fd6fc16667e270b80cc1c6d6d"
-  integrity sha512-I0I0FxVTh3KKm+CX9I57dT+DcOvvdo9w87U+Ve6N9viP7XoAq3dn2sYz619Wjr1/vRRGIxXFjaJj4HnpK4P2lw==
-
 react-is@^16.8.1:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"

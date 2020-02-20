@@ -20,7 +20,6 @@
     "git-config-path": "^2.0.0",
     "parse-git-config": "^3.0.0",
     "prompts": "^2.3.1",
-    "rambda": "^4.5.0",
     "wrap-text": "^1.0.8",
     "xns": "^2.0.7",
     "yargs": "^15.1.0"
