@@ -1,4 +1,3 @@
-
 export function isAcceptedYear(str: string): boolean {
   const split = str.split("-");
 
