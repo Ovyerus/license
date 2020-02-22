@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Test & Build
 on: [push, pull_request]
 
 jobs:
@@ -17,5 +17,8 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: yarn install
-      - run: yarn test
-      - run: yarn build
+      - run: yarn build --noEmit
+      - name: Test & publish coverage
+        uses: paambaati/codeclimate-action@v2.4.0
+        env:
+          CC_TEST_REPORTER_ID: f5b89100ce6394ed488100c1ce9083195c4510accd771d70ad0ffbac0332fd38
