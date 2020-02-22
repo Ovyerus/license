@@ -22,7 +22,10 @@ export function getLicense(
     // Or perhaps use an LRU cache to offset future loads
   ).licenseText;
 
-  for (const [key, value] of Object.entries(replacements))
+  for (const [key, value] of Object.entries(replacements).filter(
+    // Remove any undefined or falsey values
+    ([, value]) => value
+  ))
     modified = modified.replace(new RegExp(`<${key}>`, "g"), value);
 
   return modified;
