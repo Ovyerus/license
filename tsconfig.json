@@ -18,8 +18,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "resolveJsonModule": true,
-    "incremental": true
+    "resolveJsonModule": true
   },
   "include": ["src"],
   "exclude": ["**/*.spec.ts", "**/__mocks__"]
