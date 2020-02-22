@@ -17,8 +17,8 @@ interface RunArgv {
   name: string;
   email: string;
   year: string;
-  raw: boolean;
-  nonOsi: boolean;
+  raw?: boolean;
+  nonOsi?: boolean;
 }
 
 export default async function run({
@@ -35,15 +35,12 @@ export default async function run({
     if (!identifiers.has(license_))
       throw new Error("license must be a valid SPDX identifier");
 
-    const { licenseText } = JSON.parse(
-      await fs.readFile(
-        require.resolve(`@ovyerus/licenses/licenses/${license_}`),
-        "utf-8"
-      )
+    const { licenseText } = await import(
+      `@ovyerus/licenses/licenses/${license_}`
     );
 
-    process.stdout.write(licenseText);
-    process.exit(0);
+    console.log(licenseText);
+    return;
   }
 
   let license = license_;
