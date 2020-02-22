@@ -15,29 +15,31 @@ test("finds similar licenses", () => {
 });
 
 test("shows non-OSI approved licenses", () => {
-  expect(findLicense("mi", false)).toEqual([
-    "CDLA-Permissive-1.0",
-    "MIT",
-    "MIT-0",
-    "MIT-CMU",
-    "MIT-advertising",
-    "MIT-enna",
-    "MIT-feh",
-    "MITNFA",
-    "MirOS",
-    "BSD-3-Clause-Open-MPI",
-    "Imlib2",
-    "Sendmail",
-    "Sendmail-8.23",
-    "mpich2",
-    "IBM-pibs",
-    "iMatix",
-    "CNRI-Python-GPL-Compatible",
-    "MakeIndex",
-    "Multics",
-    "ImageMagick",
-    "MPL-2.0-no-copyleft-exception"
-  ]);
+  expect(new Set(findLicense("mi", false))).toEqual(
+    new Set([
+      "CDLA-Permissive-1.0",
+      "MIT",
+      "MIT-0",
+      "MIT-CMU",
+      "MIT-advertising",
+      "MIT-enna",
+      "MIT-feh",
+      "MITNFA",
+      "MirOS",
+      "BSD-3-Clause-Open-MPI",
+      "Imlib2",
+      "Sendmail",
+      "Sendmail-8.23",
+      "mpich2",
+      "IBM-pibs",
+      "iMatix",
+      "CNRI-Python-GPL-Compatible",
+      "MakeIndex",
+      "Multics",
+      "ImageMagick",
+      "MPL-2.0-no-copyleft-exception"
+    ])
+  );
 });
 
 test("finds no matching licenses", () => {
