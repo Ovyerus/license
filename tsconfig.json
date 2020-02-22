@@ -22,5 +22,5 @@
     "incremental": true
   },
   "include": ["src"],
-  "exclude": ["**/*.spec.ts"]
+  "exclude": ["**/*.spec.ts", "**/__mocks__"]
 }
