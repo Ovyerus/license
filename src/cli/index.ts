@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 import ConfigStore from "configstore";
-import gitPath from "git-config-path";
-import { sync as parseGitConfig } from "parse-git-config";
 import yargs from "yargs";
 
 import fs from "fs";
@@ -9,18 +7,18 @@ import path from "path";
 
 import config from "./config";
 import run from "./run";
-import { isAcceptedYear } from "./utils";
+import {
+  convertProject,
+  isAcceptedYear,
+  getUserEmail,
+  getUserName,
+  nonEmpty
+} from "./utils";
 
 const pkg = JSON.parse(
   // eslint-disable-next-line no-sync
   fs.readFileSync(path.resolve(__dirname, "../../package.json"), "utf-8")
 );
-const gitConfig = () => parseGitConfig({ cwd: "/", path: gitPath("global") });
-
-// TODO: maybe have a fallback before git, be npm???
-const getUserName = (): string =>
-  cfg.get("name") || gitConfig().user.name || process.env.USER;
-const getUserEmail = (): string => cfg.get("email") || gitConfig().user.email;
 
 const validateYear = (year: string) => {
   if (isAcceptedYear(year)) return year;
@@ -66,6 +64,17 @@ export default function main() {
             describe: "The copyright year.",
             type: "string"
           })
+          .option("p", {
+            alias: "project",
+            default: ".",
+            describe: "The project directory to generate for.",
+            type: "string"
+          })
+          .option("projectName", {
+            describe: "The name of the project to use in the license.",
+            default: null,
+            type: "string"
+          })
           .option("raw", {
             default: false,
             describe: "Print out the license's template.",
@@ -77,7 +86,9 @@ export default function main() {
               "Whether to show non-OSI approved licenses in the license prompt.",
             type: "boolean"
           })
-          .coerce("year", validateYear);
+          .coerce("year", validateYear)
+          .coerce("project", convertProject)
+          .coerce("projectName", nonEmpty("projectName"));
       },
       run
     )

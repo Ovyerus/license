@@ -1,3 +1,10 @@
+import gitPath from "git-config-path";
+import { sync as parseGitConfig } from "parse-git-config";
+
+import path from "path";
+
+import { cfg } from ".";
+
 export function isAcceptedYear(str: string): boolean {
   const split = str.split("-");
 
@@ -15,3 +22,19 @@ export function isAcceptedYear(str: string): boolean {
         .every(isAcceptedYear))
   );
 }
+export const convertProject = (str: string) => ({
+  path: path.resolve(str),
+  name: path.basename(path.resolve(str))
+});
+
+export const nonEmpty = (name: string) => (val: string) => {
+  if (val === "") throw new TypeError(`${name} cannot be empty`);
+  else return val;
+};
+
+const gitConfig = () => parseGitConfig({ cwd: "/", path: gitPath("global") });
+
+export const getUserName = (): string =>
+  cfg.get("name") || gitConfig().user.name || process.env.USER;
+export const getUserEmail = (): string =>
+  cfg.get("email") || gitConfig().user.email;

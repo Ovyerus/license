@@ -5,6 +5,7 @@ import prompts from "prompts";
 import wrap from "wrap-text";
 
 import { promises as fs, existsSync } from "fs";
+import path from "path";
 
 import getLicense from "../getLicense";
 
@@ -19,6 +20,8 @@ interface RunArgv {
   year: string;
   raw?: boolean;
   nonOsi?: boolean;
+  project: ReturnType<typeof import("./utils").convertProject>;
+  projectName?: string;
 }
 
 export default async function run({
@@ -28,7 +31,9 @@ export default async function run({
   year,
   // TODO: other fields for other placeholders in @ovyerus/licenses
   raw,
-  nonOsi
+  nonOsi,
+  project,
+  projectName
 }: RunArgv) {
   if (raw) {
     if (!license_) throw new Error("Specify what license to print");
@@ -43,11 +48,20 @@ export default async function run({
     return;
   }
 
+  const fp = (str: string) => path.join(project.path, str);
+
   let license = license_;
   let filename = "LICENSE";
-  const currentLicense = (await fs.readdir("./")).find(x =>
-    /^LICENSE(\.md|\.txt)?$/i.test(x)
-  ); // Check if an existing LICENSE file already exists
+  const currentLicense = (
+    await fs
+      .readdir(fp("./"))
+      .then(files =>
+        Promise.all(files.map(f => fs.lstat(fp(f)))).then(s =>
+          s.map((stat, i) => [files[i], stat.isFile()] as const)
+        )
+      )
+  ).find(([f, isFile]) => isFile && /^LICENSE(\.md|\.txt)?$/i.test(f));
+  // Check if an existing LICENSE file already exists
 
   if (currentLicense) {
     console.log("Looks like there's already a license file for this project.");
@@ -58,7 +72,7 @@ export default async function run({
       message: "Do you want to replace it?"
     });
 
-    if (replaceLicense) filename = currentLicense;
+    if (replaceLicense) [filename] = currentLicense;
     else return console.log("Exiting...");
   }
 
@@ -78,22 +92,28 @@ export default async function run({
     if (!license) return;
   }
 
-  console.log(author);
-  const text = wrap(getLicense(license, { author, year, email }));
+  const text = wrap(
+    getLicense(license, {
+      author,
+      year,
+      email,
+      project: projectName ?? project.name
+    })
+  );
 
-  await fs.writeFile(`./${filename}`, text);
+  await fs.writeFile(fp(filename), text);
 
   // TODO: what other manifests contain license info???
-  if (existsSync("./package.json")) {
-    const rawPackage = await fs.readFile("./package.json", "utf-8");
+  if (existsSync(fp("./package.json"))) {
+    const rawPackage = await fs.readFile(fp("./package.json"), "utf-8");
     const { indent } = detectIntent(rawPackage);
     const pkg = JSON.parse(rawPackage);
     pkg.license = license;
 
-    await fs.writeFile("./package.json", JSON.stringify(pkg, null, indent));
+    await fs.writeFile(fp("./package.json"), JSON.stringify(pkg, null, indent));
   }
 
-  console.log(`Successfully wrote the ${license} license to ./LICENSE`);
+  console.log(`Successfully wrote the ${license} license`);
   console.log(
     "Most information *should* have been updated with your details but " +
       "it is best to double check to make sure it is all correct."
