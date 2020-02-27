@@ -1,13 +1,10 @@
 import config from "./config";
 import { cfg } from ".";
-import { cfg as _cfg } from "./__mocks__";
 
 jest.mock(".");
 
 const log = jest.spyOn(console, "log").mockImplementation(() => {});
-
-// I hate this
-const mockCfg = (cfg as any) as typeof _cfg;
+const mockCfg = (cfg as any) as typeof import("./__mocks__").cfg;
 
 afterAll(() => log.mockRestore());
 

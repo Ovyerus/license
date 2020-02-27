@@ -35,6 +35,6 @@ export const nonEmpty = (name: string) => (val: string) => {
 const gitConfig = () => parseGitConfig({ cwd: "/", path: gitPath("global") });
 
 export const getUserName = (): string =>
-  cfg.get("name") || gitConfig().user.name || process.env.USER;
+  cfg.get("name") || gitConfig().user?.name || process.env.USER;
 export const getUserEmail = (): string =>
-  cfg.get("email") || gitConfig().user.email;
+  cfg.get("email") || gitConfig().user?.email;

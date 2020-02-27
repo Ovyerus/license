@@ -26,6 +26,8 @@ const licensesPath = path.resolve(
   "../licenses"
 );
 
+const project = { path: "/project/", name: "project" };
+
 beforeEach(() => {
   const fs_ = fs as any; // dumb hack to stop TS warnings on this below mock stuff
 
@@ -73,7 +75,8 @@ test("sets the license with placeholders filled", async () => {
     license: "MIT",
     name: "Ovyerus",
     year: "2020",
-    email: "john@example.com"
+    email: "john@example.com",
+    project
   });
 
   expect(fs.readFileSync("./LICENSE", "utf-8")).toEqual(
@@ -105,14 +108,14 @@ describe("behaviour with existing license", () => {
   test.each(files)("replaces %s", async file => {
     fs.writeFileSync(file, "My cool license text");
 
-    await run({ license: "MIT" } as any);
+    await run({ license: "MIT", project } as any);
     expect(fs.readFileSync(file, "utf-8")).toEqual(wrap(MIT.licenseText));
   });
 
   test.each(files)("doesn't replace %s", async file => {
     fs.writeFileSync(file, "My cool license text");
 
-    await run({ license: "MIT" } as any);
+    await run({ license: "MIT", project } as any);
     expect(fs.readFileSync(file, "utf-8")).toEqual("My cool license text");
   });
 });
@@ -121,7 +124,7 @@ test("updates license field in package.json", async () => {
   const str = JSON.stringify({ license: "GPL" }, null, "  ");
   fs.writeFileSync("./package.json", str);
 
-  await run({ license: "MIT" } as any);
+  await run({ license: "MIT", project } as any);
   expect(fs.readFileSync("./package.json", "utf-8")).toEqual(
     str.replace("GPL", "MIT")
   );
@@ -130,8 +133,6 @@ test("updates license field in package.json", async () => {
 test("prompts for license to use when none given", async () => {
   prompts.inject(["MIT"]);
 
-  await run({} as any);
-  expect(log).toHaveBeenCalledWith(
-    "Successfully wrote the MIT license to ./LICENSE"
-  );
+  await run({ project } as any);
+  expect(log).toHaveBeenCalledWith("Successfully wrote the MIT license");
 });

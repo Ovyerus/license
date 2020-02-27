@@ -1,4 +1,18 @@
-import { isAcceptedYear } from "./utils";
+import { sync as gitcfg } from "parse-git-config";
+
+import { cfg } from ".";
+import {
+  isAcceptedYear,
+  convertProject,
+  nonEmpty,
+  getUserEmail,
+  getUserName
+} from "./utils";
+
+jest.mock(".");
+
+const mockGitCfg = gitcfg as typeof import("../../__mocks__/parse-git-config").sync;
+const mockCfg = (cfg as any) as typeof import("./__mocks__").cfg;
 
 describe("isAcceptedYear", () => {
   test("allows standalone year", () => {
@@ -34,5 +48,71 @@ describe("isAcceptedYear", () => {
     expect(
       isAcceptedYear("something something 2004 something something")
     ).toEqual(false);
+  });
+});
+
+describe("convertProject", () => {
+  // TODO: how to make path.resolve(".") predictable to test that??
+
+  test("gives path and name", () => {
+    expect(convertProject("/project")).toEqual({
+      path: "/project",
+      name: "project"
+    });
+  });
+
+  test("project name is only top directory name", () => {
+    expect(convertProject("/project/foo/bar/baz")).toEqual({
+      path: "/project/foo/bar/baz",
+      name: "baz"
+    });
+  });
+});
+
+describe("nonEmpty", () => {
+  const fooIsntEmpty = nonEmpty("foo");
+
+  test("throws an error when empty string", () => {
+    expect(() => fooIsntEmpty("")).toThrowError(
+      new TypeError("foo cannot be empty")
+    );
+  });
+
+  test("doesn't throw on string with content", () => {
+    expect(fooIsntEmpty("foo")).toEqual("foo");
+  });
+
+  test("doesn't throw on null", () => {
+    expect(fooIsntEmpty(null as any)).toEqual(null);
+  });
+});
+
+describe("getUserName", () => {
+  process.env.USER = "env username";
+
+  test("fallbacks to env username", () => {
+    expect(getUserName()).toEqual("env username");
+  });
+
+  test("uses git config username", () => {
+    mockGitCfg.__data = { user: { name: "git username" } };
+    expect(getUserName()).toEqual("git username");
+  });
+
+  test("uses app config username", () => {
+    mockCfg.__data = { name: "config username" };
+    expect(getUserName()).toEqual("config username");
+  });
+});
+
+describe("getUserEmail", () => {
+  test("uses git config email", () => {
+    mockGitCfg.__data = { user: { email: "git email" } };
+    expect(getUserEmail()).toEqual("git email");
+  });
+
+  test("uses app config email", () => {
+    mockCfg.__data = { email: "config email" };
+    expect(getUserEmail()).toEqual("config email");
   });
 });
