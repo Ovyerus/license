@@ -1,9 +1,48 @@
 import gitPath from "git-config-path";
 import { sync as parseGitConfig } from "parse-git-config";
 
+import os from "os";
 import path from "path";
 
 import { cfg } from ".";
+
+/**
+ * Test if a string is a valid npm package name.
+ * Sort of a port of is-valid-npm-name but without the dependencies
+ */
+export function isNpmPackageName(str: string): boolean {
+  return !(
+    // musn't be blank
+    (
+      !str ||
+      // can't have leading or trailing whitespace
+      str.trim() !== str ||
+      // can't be longer than 214 chars
+      str.length > 214 ||
+      // can't start with `.` or `_`
+      [".", "_"].includes(str[0]) ||
+      // can't have uppercase
+      str !== str.toLowerCase() ||
+      // scope checks
+      (str.startsWith("@") &&
+        !(
+          // can't have multiple `@`
+          (
+            str.indexOf("@") !== str.lastIndexOf("@") ||
+            // needs to have a separating slash
+            !str.includes("/") ||
+            // can't have multiple `/`
+            str.indexOf("/") !== str.lastIndexOf("/") ||
+            // recursive check both parts of the scopes name
+            isNpmPackageName(str.split("/")[0].slice(1)) ||
+            isNpmPackageName(str.split("/")[1])
+          )
+        )) ||
+      // needs to be url safe
+      encodeURIComponent(str) !== str
+    )
+  );
+}
 
 export function isAcceptedYear(str: string): boolean {
   const split = str.split("-");
@@ -22,9 +61,14 @@ export function isAcceptedYear(str: string): boolean {
         .every(isAcceptedYear))
   );
 }
+
+/** Resolve a path, including the expansion of `~/` paths */
+const expandPath = (path_: string) =>
+  path.resolve(path_.replace(/^~(?=$|\/|\\)/, os.homedir()));
+
 export const convertProject = (str: string) => ({
-  path: path.resolve(str),
-  name: path.basename(path.resolve(str))
+  path: expandPath(str),
+  name: path.basename(expandPath(str))
 });
 
 export const nonEmpty = (name: string) => (val: string) => {

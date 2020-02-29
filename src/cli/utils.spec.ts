@@ -10,6 +10,8 @@ import {
 } from "./utils";
 
 jest.mock(".");
+jest.mock("os");
+jest.mock("path");
 
 const mockGitCfg = gitcfg as typeof import("../../__mocks__/parse-git-config").sync;
 const mockCfg = (cfg as any) as typeof import("./__mocks__").cfg;
@@ -65,6 +67,20 @@ describe("convertProject", () => {
     expect(convertProject("/project/foo/bar/baz")).toEqual({
       path: "/project/foo/bar/baz",
       name: "baz"
+    });
+  });
+
+  test("resolves `.`", () => {
+    expect(convertProject(".")).toEqual({
+      path: "/project",
+      name: "project"
+    });
+  });
+
+  test("resolves `~` to home directory", () => {
+    expect(convertProject("~/my-cool-project")).toEqual({
+      path: "/usr/my-cool-project",
+      name: "my-cool-project"
     });
   });
 });
