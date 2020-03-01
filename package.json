@@ -11,7 +11,8 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint --fix --ext js,ts .",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "docs": "md-magic"
   },
   "dependencies": {
     "@ovyerus/licenses": "^6.4.0",
@@ -22,7 +23,6 @@
     "parse-git-config": "^3.0.0",
     "prompts": "^2.3.1",
     "wrap-text": "^1.0.8",
-    "xns": "^2.0.7",
     "yargs": "^15.1.0"
   },
   "devDependencies": {
@@ -44,8 +44,8 @@
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^2.4.0",
     "jest": "^25.1.0",
+    "markdown-magic": "^1.0.0",
     "metro-memory-fs": "^0.58.0",
-    "ncc": "^0.3.6",
     "prettier": "^1.19.1",
     "ts-jest": "^25.2.1",
     "typescript": "^3.8.2"
