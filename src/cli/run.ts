@@ -7,6 +7,7 @@ import wrap from "wrap-text";
 import { promises as fs, existsSync } from "fs";
 import path from "path";
 
+import findLicense from "../findLicense";
 import getLicense from "../getLicense";
 
 const osiOnlyIdentifiers = Object.entries(licenses)
@@ -81,10 +82,16 @@ export default async function run({
       name: "license",
       type: "autocomplete",
       message: "Search for the license you want",
+      // This + `suggest` is probably super inefficient but its the best we have
+      // without repeating code from findLicense
       choices: (nonOsi
         ? Array.from(identifiers)
         : osiOnlyIdentifiers
-      ).map(x => ({ title: x, value: x }))
+      ).map(x => ({ title: x, value: x })),
+      suggest: input =>
+        Promise.resolve(
+          findLicense(input, !nonOsi).map(x => ({ title: x, value: x }))
+        )
     });
 
     ({ license } = response);
