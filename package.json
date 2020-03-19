@@ -4,6 +4,7 @@
   "main": "dist/getLicense.js",
   "author": "Ovyerus <iamovyerus@gmail.com>",
   "license": "MIT",
+  "description": "Easily generate licenses for your projects!",
   "bin": {
     "license": "dist/cli/index.js"
   },
