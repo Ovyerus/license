@@ -44,7 +44,6 @@ has never been easier!
 First, globally install license through your package manager of choice.
 
 ```sh
-# NOT CURRENTLY UNDER THIS PACKAGE NAME
 $ yarn global add license
 # or
 $ npm i -g license
