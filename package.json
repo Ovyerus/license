@@ -8,6 +8,9 @@
   "bin": {
     "license": "dist/cli/index.js"
   },
+  "files": [
+  	"dist"
+  ],
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",
