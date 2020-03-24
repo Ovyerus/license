@@ -1,6 +1,6 @@
 {
   "name": "license",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/getLicense.js",
   "author": "Ovyerus <iamovyerus@gmail.com>",
   "license": "MIT",
