@@ -1,2 +1,2 @@
 export { default, getLicense } from "./getLicense";
-export * from "./findLicense";
+export { findLicense } from "./findLicense";
