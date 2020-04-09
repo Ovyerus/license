@@ -5,6 +5,7 @@
   "author": "Ovyerus <iamovyerus@gmail.com>",
   "license": "MIT",
   "description": "Easily generate licenses for your projects!",
+  "repository": "https://github.com/Ovyerus/license",
   "bin": {
     "license": "dist/cli/index.js"
   },
