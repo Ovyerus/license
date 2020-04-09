@@ -1,7 +1,7 @@
 {
   "name": "license",
   "version": "1.0.2",
-  "main": "dist/getLicense.js",
+  "main": "dist/index.js",
   "author": "Ovyerus <iamovyerus@gmail.com>",
   "license": "MIT",
   "description": "Easily generate licenses for your projects!",
@@ -9,7 +9,7 @@
     "license": "dist/cli/index.js"
   },
   "files": [
-  	"dist"
+    "dist"
   ],
   "scripts": {
     "test": "jest",
