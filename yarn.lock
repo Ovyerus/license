@@ -518,11 +518,6 @@
     semver "^6.3.0"
     tsutils "^3.17.1"
 
-"@zeit/ncc@^0.21.1":
-  version "0.21.1"
-  resolved "https://registry.yarnpkg.com/@zeit/ncc/-/ncc-0.21.1.tgz#44fd4359c54ba34a018a5ccf7a315489db20a733"
-  integrity sha512-M9WzgquSOt2nsjRkYM9LRylBLmmlwNCwYbm3Up3PDEshfvdmIfqpFNSK8EJvR18NwZjGHE5z2avlDtYQx2JQnw==
-
 abab@^2.0.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.3.tgz#623e2075e02eb2d3f2475e49f99c91846467907a"
