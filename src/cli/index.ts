@@ -37,6 +37,7 @@ export default function main() {
     .scriptName(pkg.name)
     .version(pkg.version)
     .usage("Usage: license [--help] [--version] [command]")
+    .env("LICENSE")
     .command(
       "$0 [license]",
       "Generate a license file.",
