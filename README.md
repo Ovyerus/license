@@ -2,6 +2,9 @@
 
 > Easily generate licenses for your projects!
 
+> [!NOTE]
+> This is currently undergoing a major rewrite. Code in this repository may not be fully working, if you wish
+
 <!-- AUTO-GENERATED-CONTENT:START (TOC:collapse=true&collapseText=Table of Contents) -->
 <details>
 <summary>Table of Contents</summary>
