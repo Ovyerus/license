@@ -1,8 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "allowJs": true
-  },
-  "include": ["src", "jest.config.js", "__mocks__", "markdown.config.js"],
-  "exclude": []
-}
