@@ -1,9 +1,11 @@
+**/.DS_Store
 dist
 package-lock.json
 tsconfig.tsbuildinfo
 coverage
 .envrc
 .direnv
+oclif.manifest.json
 
 .yarn/*
 !.yarn/patches

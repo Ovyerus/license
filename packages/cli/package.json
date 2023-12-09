@@ -1,0 +1,62 @@
+{
+  "name": "license",
+  "description": "Easily generate licenses for your projects!",
+  "version": "2.0.0",
+  "author": "Ovyerus <ovy@ovyerus.com>",
+  "homepage": "https://github.com/Ovyerus/license",
+  "bugs": "https://github.com/Ovyerus/license/issues",
+  "license": "MIT",
+  "bin": "./bin/run.js",
+  "dependencies": {
+    "@oclif/core": "^3",
+    "@oclif/plugin-help": "^5"
+  },
+  "devDependencies": {
+    "@oclif/test": "^3",
+    "@types/node": "^18",
+    "oclif": "^4.0.4",
+    "shx": "^0.3.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "/bin",
+    "/dist",
+    "/oclif.manifest.json"
+  ],
+  "oclif": {
+    "bin": "license",
+    "dirname": "license",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help"
+    ],
+    "topicSeparator": " ",
+    "topics": {
+      "hello": {
+        "description": "Say hello to the world and others"
+      }
+    }
+  },
+  "repository": "Ovyerus/license",
+  "scripts": {
+    "build": "shx rm -rf dist && tsc -b",
+    "lint": "eslint . --ext .ts",
+    "dev": "ts-node bin/dev.js",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "posttest": "yarn lint",
+    "prepack": "yarn build && oclif manifest && oclif readme",
+    "prepare": "yarn build",
+    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "oclif readme && git add README.md"
+  },
+  "keywords": [
+    "oclif"
+  ],
+  "types": "dist/index.d.ts",
+  "exports": "./lib/index.js",
+  "type": "module"
+}

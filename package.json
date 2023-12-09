@@ -8,6 +8,10 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "build": "yarn workspace license build",
+    "dev": "yarn workspace license dev"
+  },
   "dependencies": {
     "eslint": "^8.55.0",
     "eslint-config-clarity": "^1.0.6",
