@@ -1,0 +1,6 @@
+{
+  "name": "@ovyerus/licenses",
+  "packageManager": "yarn@4.0.2",
+  "version": "7.0.0",
+  "type": "module"
+}
