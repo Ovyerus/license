@@ -2,5 +2,26 @@
   "name": "@ovyerus/licenses",
   "packageManager": "yarn@4.0.2",
   "version": "7.0.0",
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "build": "ts-node ./build.ts",
+    "prepack": "yarn build"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    "./*.json": "./dist/*.json"
+  },
+  "files": [
+    "dist/"
+  ],
+  "devDependencies": {
+    "@types/node": "^18",
+    "@types/unist": "^3.0.2",
+    "remark": "^15.0.1",
+    "remark-frontmatter": "^5.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "vfile": "^6.0.1",
+    "yaml": "^2.3.4"
+  }
 }
