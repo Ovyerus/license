@@ -27,9 +27,32 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`license [LICENSE]`](#license-license)
 * [`license hello PERSON`](#license-hello-person)
 * [`license hello world`](#license-hello-world)
 * [`license help [COMMANDS]`](#license-help-commands)
+
+## `license [LICENSE]`
+
+meow
+
+```
+USAGE
+  $ license  [LICENSE] [-e] [-r] [-y <value>]
+
+ARGUMENTS
+  LICENSE  The SPDX identifier, or full name, of the license to use
+
+FLAGS
+  -e, --exact         Don't bring up the interactive search if no match was found
+  -r, --raw           Print the license text to stdout
+  -y, --year=<value>  [default: 2023] Set the year for the license
+
+DESCRIPTION
+  meow
+```
+
+_See code: [src/commands/index.ts](https://github.com/Ovyerus/license/blob/v2.0.0/src/commands/index.ts)_
 
 ## `license hello PERSON`
 

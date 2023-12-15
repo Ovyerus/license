@@ -9,7 +9,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "yarn workspace license build",
+    "build": "yarn workspaces foreach -A run build",
     "dev": "yarn workspace license dev"
   },
   "dependencies": {
