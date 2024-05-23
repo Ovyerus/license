@@ -26,7 +26,10 @@ export function getLicense(
     // Remove any undefined or falsey values
     ([, value]) => value
   ))
-    modified = modified.replace(new RegExp(`<${key}>`, "g"), value);
+    modified = modified
+      .replace(new RegExp(`<${key}>`, "g"), value)
+      // Some licenses, like Apache 2.0 use square bracket templating for some values.
+      .replace(new RegExp(`\\[${key}\\]`, "g"), value);
 
   return modified;
 }
